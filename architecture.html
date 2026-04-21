@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture — Anusha Jambaldinni</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0e0e0e; --surface: #161616; --border: #2a2a2a; --text: #e8e3dc; --muted: #7a7570; --accent: #c8b89a; --tag-bg: #1e1e1e; --tag-border: #333; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 60px; background: rgba(14,14,14,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'EB Garamond', serif; font-size: 18px; color: var(--text); text-decoration: none; }
+    .nav-logo em { font-style: italic; color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-cta { font-size: 13px !important; font-weight: 500; color: var(--bg) !important; background: var(--text); padding: 8px 18px; border-radius: 3px; text-transform: none !important; }
+    .hero { padding: 96px 48px 72px; max-width: 900px; }
+    .hero-label { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .hero h1 { font-family: 'EB Garamond', serif; font-size: clamp(42px, 6vw, 68px); font-weight: 400; line-height: 1.08; letter-spacing: -0.01em; margin-bottom: 24px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .hero-back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
+    .hero-back:hover { color: var(--text); }
+    .hero-back svg { width: 14px; height: 14px; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; padding: 40px 48px 0; border-top: 1px solid var(--border); margin-bottom: 4px; }
+    .section-header h2 { font-family: 'EB Garamond', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .section-count { font-size: 12px; color: var(--muted); }
+    .projects { padding: 0 48px 80px; }
+    .project-card { display: grid; grid-template-columns: 64px 1fr auto; gap: 0 32px; padding: 36px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: background 0.15s; cursor: pointer; align-items: start; }
+    .project-card:hover { background: var(--surface); margin: 0 -48px; padding-left: 48px; padding-right: 48px; }
+    .project-card:last-child { border-bottom: none; }
+    .project-number { font-family: 'EB Garamond', serif; font-size: 13px; color: var(--muted); padding-top: 4px; }
+    .project-arrow { color: var(--muted); font-size: 18px; padding-top: 4px; transition: transform 0.2s, color 0.2s; align-self: start; }
+    .project-card:hover .project-arrow { transform: translateX(4px); color: var(--accent); }
+    .project-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .project-category { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .project-dot { color: var(--border); }
+    .project-date { font-size: 12px; color: var(--muted); }
+    .project-title { font-family: 'EB Garamond', serif; font-size: clamp(22px, 3vw, 30px); font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 10px; }
+    .project-title em { font-style: italic; color: var(--accent); }
+    .project-desc { font-size: 14px; color: var(--muted); max-width: 600px; line-height: 1.65; margin-bottom: 16px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { font-size: 11px; color: var(--muted); background: var(--tag-bg); border: 1px solid var(--tag-border); padding: 4px 10px; border-radius: 2px; }
+    .sub-grid { padding: 0 48px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .sub-item { padding: 24px 28px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; color: inherit; transition: border-color 0.2s; }
+    .sub-item:hover { border-color: var(--muted); }
+    .sub-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .sub-title { font-family: 'EB Garamond', serif; font-size: 19px; color: var(--text); margin-bottom: 6px; font-style: italic; }
+    .sub-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    footer { border-top: 1px solid var(--border); padding: 36px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-name { font-family: 'EB Garamond', serif; font-size: 15px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; } .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding: 60px 20px 48px; }
+      .section-header { padding: 32px 20px 0; }
+      .projects { padding: 0 20px 60px; }
+      .project-card { grid-template-columns: 1fr auto; }
+      .project-card:hover { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+      .project-number { display: none; }
+      .sub-grid { padding: 0 20px 60px; grid-template-columns: 1fr; }
+      footer { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://anosajam-droid.github.io/Project-Portfolio/index.html">Anusha <em>J.</em></a>
+  <div class="nav-links">
+    <a href="https://anosajam-droid.github.io/Project-Portfolio/#work">Work</a>
+    <a href="https://anosajam-droid.github.io/Project-Portfolio/#about">About</a>
+    <a href="#" class="active">Architecture</a>
+    <a href="mailto:anushajambaldinni.work@gmail.com" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <a class="hero-back" href="https://anosajam-droid.github.io/Project-Portfolio/index.html">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L4 7l5 5"/></svg>
+    Back to main portfolio
+  </a>
+  <p class="hero-label">Architecture · 2018 – 2023</p>
+  <h1>Academic &amp; <em>Professional</em><br>Architecture Work</h1>
+  <p>Five years of architectural education at Nitte School of Architecture and an internship at Sweven Studio — institutional design, memorial museums, textile centres, and residential detailing.</p>
+</section>
+
+<!-- ACADEMIC -->
+<div class="section-header">
+  <h2>Academic Projects</h2>
+  <span class="section-count">05 projects · 2018–2023</span>
+</div>
+
+<div class="projects">
+  <a class="project-card" href="project-livelihood.html">
+    <div class="project-number">01</div>
+    <div class="project-body">
+      <div class="project-meta">
+        <span class="project-category">Thesis · Studio 10</span>
+        <span class="project-dot">·</span>
+        <span class="project-date">Ilkal, Karnataka · 2023</span>
+      </div>
+      <h3 class="project-title">Reinventing the <em>Livelihood</em></h3>
+      <p class="project-desc">An architectural enquiry into the integration of heritage and socio-economic activities. A textile centre in Ilkal designed as a hub for production, training, marketing and community development — preserving the cultural heritage of Ilkal saree weaving.</p>
+      <div class="tags">
+        <span class="tag">Institutional Design</span><span class="tag">Heritage</span>
+        <span class="tag">Community</span><span class="tag">27 Acres · 14,100 SQM</span>
+      </div>
+    </div>
+    <div class="project-arrow">→</div>
+  </a>
+
+  <a class="project-card" href="project-iiad.html">
+    <div class="project-number">02</div>
+    <div class="project-body">
+      <div class="project-meta">
+        <span class="project-category">Institutional Design · Studio 6</span>
+        <span class="project-dot">·</span>
+        <span class="project-date">Yelahanka, Bangalore · 2021</span>
+      </div>
+      <h3 class="project-title"><em>IIAD</em> — International Institute of Art &amp; Design</h3>
+      <p class="project-desc">Dialogue : Space. A campus design for Art, Architecture and Fashion departments — architecture as a medium for exchange of knowledge, where the spaces become the instigators for collaboration.</p>
+      <div class="tags">
+        <span class="tag">Campus Planning</span><span class="tag">Institutional</span>
+        <span class="tag">10 Acres</span><span class="tag">Mixed-Use</span>
+      </div>
+    </div>
+    <div class="project-arrow">→</div>
+  </a>
+
+  <a class="project-card" href="project-gavai.html">
+    <div class="project-number">03</div>
+    <div class="project-body">
+      <div class="project-meta">
+        <span class="project-category">Memorial Museum · Studio 7</span>
+        <span class="project-dot">·</span>
+        <span class="project-date">Motera, Ahmedabad · 2021</span>
+      </div>
+      <h3 class="project-title">Gavai <em>Museum</em></h3>
+      <p class="project-desc">A memorial museum dedicated to Pandith Puttaraj Gavai and Pandit Panchakshari Gavai, the blind classical singers. Form derived from the Chladni pattern with a focus on sensory experience and accessibility for visually impaired visitors.</p>
+      <div class="tags">
+        <span class="tag">Museum</span><span class="tag">Memorial</span>
+        <span class="tag">Accessible Design</span><span class="tag">Waterscape</span>
+      </div>
+    </div>
+    <div class="project-arrow">→</div>
+  </a>
+
+  <a class="project-card" href="project-summersomewhere.html">
+    <div class="project-number">04</div>
+    <div class="project-body">
+      <div class="project-meta">
+        <span class="project-category">Interior Design · Studio 5</span>
+        <span class="project-dot">·</span>
+        <span class="project-date">Bangalore · 2021</span>
+      </div>
+      <h3 class="project-title"><em>SummerSomewhere</em> — Retail Interior</h3>
+      <p class="project-desc">An offline pop-up retail store translating a Mediterranean and Bohemian brand identity into a physical space. Zoned to guide the customer from window display through to final purchase.</p>
+      <div class="tags">
+        <span class="tag">Interior Design</span><span class="tag">Retail</span>
+        <span class="tag">Commercial</span><span class="tag">Branding</span>
+      </div>
+    </div>
+    <div class="project-arrow">→</div>
+  </a>
+
+  <a class="project-card" href="project-workingdrawing.html">
+    <div class="project-number">05</div>
+    <div class="project-body">
+      <div class="project-meta">
+        <span class="project-category">Technical Drawing · Studio 5 &amp; 6</span>
+        <span class="project-dot">·</span>
+        <span class="project-date">Bangalore · 2020–2021</span>
+      </div>
+      <h3 class="project-title">Working <em>Drawing</em> — 3BHK Residence</h3>
+      <p class="project-desc">A complete set of working drawings — floor plans, marking drawings, structural details, plumbing and electrical layouts, sections, elevations, kitchen and bathroom details, and door schedules.</p>
+      <div class="tags">
+        <span class="tag">Technical Drawing</span><span class="tag">Residential</span>
+        <span class="tag">Structural</span><span class="tag">MEP</span>
+      </div>
+    </div>
+    <div class="project-arrow">→</div>
+  </a>
+</div>
+
+<!-- COMPETITIONS -->
+<div class="section-header">
+  <h2>Competitions</h2>
+  <span class="section-count">04 entries</span>
+</div>
+<div class="sub-grid">
+  <a class="sub-item" href="project-tinylibrary.html">
+    <p class="sub-label">Volume Zero · Team · 2022 →</p>
+    <p class="sub-title">Acarya — Tiny Library</p>
+    <p class="sub-desc">Team entry. A library in Googal, Raichur, Karnataka designed as a temple of knowledge — lifted on stilts for flood resilience, drawing on Vachana and Janapada traditions.</p>
+  </a>
+  <div class="sub-item">
+    <p class="sub-label">120 Hours · Team · 2022</p>
+    <p class="sub-title" style="font-style:normal">Weave</p>
+    <p class="sub-desc">Team entry for the 120 Hours competition exploring structural and spatial weaving as an organisational principle, developed within a five-day brief.</p>
+  </div>
+  <div class="sub-item">
+    <p class="sub-label">COA Heritage Documentation · Shortlisted</p>
+    <p class="sub-title" style="font-style:normal">Heritage Documentation</p>
+    <p class="sub-desc">Council of Architecture heritage documentation — shortlisted. Also shortlisted for the ANDC Trophy and NASA Journalism Trophy.</p>
+  </div>
+  <div class="sub-item">
+    <p class="sub-label">Streets for People · 2022</p>
+    <p class="sub-title" style="font-style:normal">Streets for People — Trichy</p>
+    <p class="sub-desc">Urban design competition entry focused on pedestrianisation and public realm improvement in Trichy, Tamil Nadu.</p>
+  </div>
+</div>
+
+<!-- INTERNSHIP -->
+<div class="section-header">
+  <h2>Professional Experience</h2>
+  <span class="section-count">Sweven Studio, Bangalore · 2022–2023</span>
+</div>
+<div style="padding: 0 48px; margin-bottom: 24px;">
+  <a href="sweven-studio.html" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);text-decoration:none;padding:10px 16px;border:1px solid var(--border);border-radius:3px;transition:all 0.2s" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--muted)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
+    View all internship work — 8 projects &nbsp;→
+  </a>
+</div>
+<div class="sub-grid" style="margin-bottom:80px">
+  <div class="sub-item"><p class="sub-label">Residential · Interior</p><p class="sub-title">Mr. Nagabhushan's Residence</p><p class="sub-desc">Interior design proposal and detailing for a 4BHK in Davangere. Design development, 3D visualisation and fabrication detailing across three bedrooms and a puja room.</p></div>
+  <div class="sub-item"><p class="sub-label">Institutional · 3D Modelling</p><p class="sub-title">ESIC Hospital &amp; Housing — Harohalli</p><p class="sub-desc">Design development and 3D modelling for a 100-bedded hospital with 32 staff quarters. Produced residence elevations submitted for CPWD approval.</p></div>
+  <div class="sub-item"><p class="sub-label">Residential · Working Drawing</p><p class="sub-title">Starworth Villas</p><p class="sub-desc">Working drawings, 3D modelling and rendering for a villa development. Facade elevation options (beige, dark, light) produced for client selection.</p></div>
+  <div class="sub-item"><p class="sub-label">Residential · Detailing</p><p class="sub-title">Mr. Basavaraj's Residence</p><p class="sub-desc">Detailing and working drawing production including MS staircase details with fabrication drawings at 1:15 and 1:2 scales.</p></div>
+  <div class="sub-item"><p class="sub-label">Residential · Interior &amp; 3D</p><p class="sub-title">Dr. Madhu's Residence</p><p class="sub-desc">Interior design development, 3D modelling and fabrication drawings for a louvre screen and utility grill on the east facade.</p></div>
+  <div class="sub-item"><p class="sub-label">Industrial · Tender Drawings</p><p class="sub-title">Dairy Day — Manufacturing Unit</p><p class="sub-desc">Tender drawing production for a manufacturing facility — sections and layout drawings for Phase II of Dairy Classic Ice Creams Pvt. Ltd.</p></div>
+  <div class="sub-item"><p class="sub-label">Commercial · Conceptual &amp; 3D</p><p class="sub-title">Commercial Complex — Jigani</p><p class="sub-desc">Conceptual design development and 3D modelling for a commercial complex in Jigani, Bangalore.</p></div>
+  <div class="sub-item"><p class="sub-label">Residential · Structural 3D</p><p class="sub-title">Avinash's &amp; Shantanu's Residences</p><p class="sub-desc">3D modelling of structural frameworks with sections for structural reference. Floor plans with reference to general arrangement for Shantanu's 7,572 sq.ft. residence.</p></div>
+</div>
+
+<footer>
+  <span class="footer-name">Anusha Jambaldinni · Architecture Portfolio 2018–2023</span>
+  <div class="footer-links">
+    <a href="https://anosajam-droid.github.io/Project-Portfolio/#work">Work</a>
+    <a href="https://anosajam-droid.github.io/Project-Portfolio/#about">About</a>
+    <a href="mailto:anushajambaldinni.work@gmail.com">Email</a>
+  </div>
+</footer>
+</body>
+</html>
