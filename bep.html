@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISO 19650 BIM Execution Plan — Anusha J</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d0f;--surface:#111518;--surface2:#161b1f;--border:#1e2529;--border-light:#2a3038;--text:#e8eaec;--text-muted:#6b7885;--text-mid:#9aa5b0;--accent:#f59e0b;--accent2:#00c9a7;--accent3:#0085ff;--serif:'DM Serif Display',Georgia,serif;--mono:'DM Mono',monospace;--sans:'Instrument Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:60px;background:rgba(10,13,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--serif);font-size:1.1rem;color:var(--text);text-decoration:none;}
+.nav-logo em{color:var(--accent);font-style:italic;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-back{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--accent);border:1px solid rgba(245,158,11,.4);padding:7px 16px;border-radius:2px;text-decoration:none;transition:background .2s,color .2s;}
+.nav-back:hover{background:var(--accent);color:var(--bg);}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 48px 80px;max-width:1100px;margin:0 auto;}
+.hero::after{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(245,158,11,.05) 0%,transparent 70%);pointer-events:none;}
+.hero-tag{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp .5s ease both;}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--accent);}
+.hero h1{font-family:var(--serif);font-size:clamp(2.6rem,4.5vw,4.4rem);line-height:1.05;color:var(--text);margin-bottom:24px;font-weight:400;max-width:820px;animation:fadeUp .5s .08s ease both;}
+.hero h1 em{color:var(--accent);font-style:italic;}
+.hero-summary{font-size:18px;color:var(--text-mid);line-height:1.8;max-width:660px;margin-bottom:52px;animation:fadeUp .5s .16s ease both;}
+.hero-summary strong{color:var(--text);}
+.outcomes{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;animation:fadeUp .5s .22s ease both;}
+.outcome{background:var(--surface);padding:24px 18px;text-align:center;}
+.outcome-val{font-family:var(--mono);font-size:2rem;font-weight:500;color:var(--accent);line-height:1;margin-bottom:8px;display:block;}
+.outcome-val.teal{color:var(--accent2);}
+.outcome-val.blue{color:var(--accent3);}
+.outcome-val.purple{color:#a78bfa;}
+.outcome-label{font-size:12px;color:var(--text-muted);line-height:1.45;}
+.context-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;animation:fadeUp .5s .28s ease both;}
+.ctx-tag{font-family:var(--mono);font-size:11px;padding:6px 12px;border-radius:2px;border:1px solid var(--border);color:var(--text-muted);background:var(--surface);}
+.section{position:relative;z-index:1;padding:80px 48px;max-width:1100px;margin:0 auto;}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);position:relative;z-index:1;}
+.section-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block;}
+.section-h{font-family:var(--serif);font-size:1.9rem;font-weight:400;color:var(--text);margin-bottom:10px;}
+.section-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:580px;}
+.story{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.story-col p{font-size:15.5px;color:var(--text-mid);line-height:1.85;margin-bottom:16px;}
+.story-col p:last-child{margin-bottom:0;}
+.story-col p strong{color:var(--text);font-weight:600;}
+.story-col h3{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--text);margin-bottom:14px;}
+
+/* DELIVERABLES — what was actually produced */
+.deliverables{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:48px;}
+.del-card{background:var(--surface);padding:30px 26px;}
+.del-clause{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:block;}
+.del-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.del-desc{font-size:13px;color:var(--text-muted);line-height:1.65;}
+.del-output{font-family:var(--mono);font-size:11px;color:var(--accent2);margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
+
+/* BIM USE SUMMARY — not a full table, just the headline split */
+.bim-split{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:48px;}
+.bim-half{background:var(--surface);padding:32px;}
+.bim-count{font-family:var(--mono);font-size:3rem;font-weight:500;color:var(--accent);line-height:1;margin-bottom:8px;}
+.bim-count.teal{color:var(--accent2);}
+.bim-label{font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;}
+.bim-uses{display:flex;flex-wrap:wrap;gap:6px;}
+.bim-use{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:2px;border:1px solid var(--border-light);color:var(--text-muted);background:var(--surface2);}
+.bim-use.hi{border-color:rgba(245,158,11,.3);color:var(--accent);background:rgba(245,158,11,.07);}
+.bim-use.teal{border-color:rgba(0,201,167,.3);color:var(--accent2);background:rgba(0,201,167,.07);}
+
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px;}
+.skill-tag{font-family:var(--mono);font-size:11px;padding:7px 13px;border-radius:2px;border:1px solid var(--border-light);color:var(--text-mid);background:var(--surface);}
+.skill-tag.amber{border-color:rgba(245,158,11,.3);color:var(--accent);background:rgba(245,158,11,.07);}
+.skill-tag.teal{border-color:rgba(0,201,167,.3);color:var(--accent2);background:rgba(0,201,167,.07);}
+.skill-tag.blue{border-color:rgba(0,133,255,.3);color:var(--accent3);background:rgba(0,133,255,.07);}
+.cta-row{display:flex;align-items:center;justify-content:space-between;padding:32px 36px;background:var(--surface);border:1px solid var(--border);border-radius:4px;}
+.cta-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+.cta-title{font-size:17px;font-weight:600;color:var(--text);}
+.cta-link{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(245,158,11,.4);padding:11px 22px;border-radius:2px;text-decoration:none;transition:background .2s,color .2s;white-space:nowrap;}
+.cta-link:hover{background:var(--accent);color:var(--bg);}
+.page-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.footer-name{font-family:var(--serif);font-size:1.05rem;color:var(--text);}
+.footer-sub{font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-top:4px;}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:860px){nav{padding:0 20px;}.nav-links{display:none;}.hero{padding:100px 20px 60px;}.section{padding:60px 20px;}.outcomes{grid-template-columns:repeat(2,1fr);}.story,.bim-split{grid-template-columns:1fr;}.deliverables{grid-template-columns:1fr;}.cta-row{flex-direction:column;align-items:flex-start;gap:20px;}.page-footer{padding:32px 20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Anusha <em>J.</em></a>
+  <ul class="nav-links">
+    <li><a href="#deliverables">Deliverables</a></li>
+    <li><a href="#bimuses">BIM Uses</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Information Management · BIM Strategy · Oxford · 2024</div>
+  <h1>Building the <em>information framework</em> before anyone touches the model</h1>
+  <p class="hero-summary">Most BIM problems on site trace back to decisions not made early enough. The BIM Execution Plan is where those decisions get made. I authored a <strong>post-appointment BEP under ISO 19650-2:2018</strong> for a 20-storey mixed-use development — defining how every piece of information would be created, shared, and owned across the full project lifecycle.</p>
+  <div class="outcomes">
+    <div class="outcome"><span class="outcome-val">24</span><div class="outcome-label">BIM uses defined across Plan, Design, Construct and Operate</div></div>
+    <div class="outcome"><span class="outcome-val teal">9</span><div class="outcome-label">International standards applied — including ISO 19650, ISO 7200 and BS 8536</div></div>
+    <div class="outcome"><span class="outcome-val blue">8</span><div class="outcome-label">Model types specified in EIR with native and open format requirements</div></div>
+    <div class="outcome"><span class="outcome-val purple">5</span><div class="outcome-label">Organisations with confirmed contacts, contract numbers and responsibilities</div></div>
+  </div>
+  <div class="context-tags">
+    <span class="ctx-tag">ISO 19650-2:2018 Post-Appointment BEP</span>
+    <span class="ctx-tag">Astria Mixed Development · Oxford</span>
+    <span class="ctx-tag">Client: Horizon Developers</span>
+    <span class="ctx-tag">24-month programme</span>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="story reveal">
+    <div class="story-col">
+      <span class="section-label">The Project</span>
+      <h3>A 20-storey mixed-use scheme that needed a digital delivery strategy</h3>
+      <p>Astria Mixed Development — a high-density scheme on John Garne Way, Marston, Oxford — comprises a 20-storey residential tower, a 5-storey commercial building, luxury apartments, and recreational amenities across 10 acres. Client: Horizon Developers. Duration: 24 months.</p>
+      <p>At post-appointment stage, <strong>the delivery team is confirmed but nothing has been modelled yet.</strong> This is the moment to define how the project will be digitally delivered — what information is needed, when, in what format, and by whom. Get this right and the project runs on clear information. Get it wrong and you spend the rest of the project chasing correct data from the wrong people.</p>
+    </div>
+    <div class="story-col">
+      <span class="section-label">What I Produced</span>
+      <h3>A BEP that covers every stage from programming to operation</h3>
+      <p>The BEP follows the four-step planning procedure: identify BIM uses, define the execution process, develop information exchanges, and define supporting infrastructure. Each step produced a concrete deliverable — not just a written plan.</p>
+      <p>The Exchange Information Requirements matrix specifies <strong>what software, what native format (.RVT), what open format (IFC)</strong>, and at what Plan of Work stage each model type must be delivered. The TIDP allocates responsibility per task team. The MIDP gives the client a single view of all information delivery across the project. File naming, CDE configuration, revision codes — all defined before the first model element is placed.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section" id="deliverables">
+  <span class="section-label reveal">What Was Produced</span>
+  <h2 class="section-h reveal">Six core BEP deliverables</h2>
+  <p class="section-sub reveal">Each one traceable to a specific ISO 19650-2 clause — not just described, but structured and evidenced.</p>
+
+  <div class="deliverables reveal">
+    <div class="del-card">
+      <span class="del-clause">Clause 5.1.2</span>
+      <div class="del-title">Project Information Requirements</div>
+      <div class="del-desc">Defined what the client needs to know at each decision point — from programming through to operation. Establishes the information purpose before any modelling begins.</div>
+      <div class="del-output">Output: PIR register with named decision points</div>
+    </div>
+    <div class="del-card">
+      <span class="del-clause">Clause 5.4.2</span>
+      <div class="del-title">Responsibility Matrix</div>
+      <div class="del-desc">Five organisations, five named individuals, five contract numbers. Each BIM use allocated to a team lead with estimated effort. RACI framework applied across all information management activities.</div>
+      <div class="del-output">Output: Named RACI matrix with contract references</div>
+    </div>
+    <div class="del-card">
+      <span class="del-clause">Clause 5.4.3</span>
+      <div class="del-title">Exchange Information Requirements</div>
+      <div class="del-desc">Eight model types — structural, MEP, architectural, HVAC, space planning, site context, existing buildings, model aggregation — each with software, native format, open format, and delivery stage requirements.</div>
+      <div class="del-output">Output: EIR matrix across 5 Plan of Work stages</div>
+    </div>
+    <div class="del-card">
+      <span class="del-clause">Clause 5.4.4 & 5.4.5</span>
+      <div class="del-title">TIDP & MIDP</div>
+      <div class="del-desc">Task Information Delivery Plans produced per team. Master MIDP compiled to give the client a project-wide view of what information is being delivered, when, and by whom.</div>
+      <div class="del-output">Output: TIDP + MIDP with file identifiers and milestones</div>
+    </div>
+    <div class="del-card">
+      <span class="del-clause">Clause 5.1.7</span>
+      <div class="del-title">File Naming & CDE</div>
+      <div class="del-desc">Eight-field naming convention established. CDE configured to assign revision codes, status codes, and classification codes to every container. Example: ABC123-IBL-A1-01-M-A-0001_BLDG1.</div>
+      <div class="del-output">Output: Naming protocol + CDE configuration spec</div>
+    </div>
+    <div class="del-card">
+      <span class="del-clause">Multiple Standards</span>
+      <div class="del-title">9-Standard Compliance Framework</div>
+      <div class="del-desc">ISO 19650 series, ISO 7200, ISO 55000, ISO 4157, CEN/EN 17412-1, BS 5606, BS 8210, BS 8536, and UK National Annex — each applied to a specific aspect of information management.</div>
+      <div class="del-output">Output: Standards matrix with application notes</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section" id="bimuses">
+  <span class="section-label reveal">BIM Uses</span>
+  <h2 class="section-h reveal">24 uses. Two tiers.</h2>
+  <p class="section-sub reveal">High-priority uses directly impact cost, programme, or regulatory compliance. Medium-priority uses support operational efficiency.</p>
+
+  <div class="bim-split reveal">
+    <div class="bim-half">
+      <div class="bim-count">15</div>
+      <div class="bim-label">High Priority — critical path impact</div>
+      <div class="bim-uses">
+        <span class="bim-use hi">3D Coordination</span>
+        <span class="bim-use hi">4D Phase Planning</span>
+        <span class="bim-use hi">5D Cost Estimation</span>
+        <span class="bim-use hi">Energy Analysis</span>
+        <span class="bim-use hi">Sustainability Evaluation</span>
+        <span class="bim-use hi">Code Validation</span>
+        <span class="bim-use hi">Design Authoring</span>
+        <span class="bim-use hi">Site Analysis</span>
+        <span class="bim-use hi">Structural Analysis</span>
+        <span class="bim-use hi">Asset Management</span>
+        <span class="bim-use hi">Programming</span>
+        <span class="bim-use hi">Design Reviews</span>
+        <span class="bim-use hi">Existing Conditions</span>
+        <span class="bim-use hi">Site Utilisation</span>
+        <span class="bim-use hi">Construction System Design</span>
+      </div>
+    </div>
+    <div class="bim-half">
+      <div class="bim-count teal">9</div>
+      <div class="bim-label">Medium Priority — operational support</div>
+      <div class="bim-uses">
+        <span class="bim-use teal">VR Design Validation</span>
+        <span class="bim-use teal">Lighting Analysis</span>
+        <span class="bim-use teal">Engineering Analysis</span>
+        <span class="bim-use teal">Digital Fabrication</span>
+        <span class="bim-use teal">Building System Analysis</span>
+        <span class="bim-use teal">Maintenance Scheduling</span>
+        <span class="bim-use teal">Space Management</span>
+        <span class="bim-use teal">Disaster Planning</span>
+        <span class="bim-use teal">Record Modelling</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section" id="skills">
+  <span class="section-label reveal">Skills</span>
+  <div class="skills-wrap reveal">
+    <span class="skill-tag amber">ISO 19650-2:2018 BEP authoring</span>
+    <span class="skill-tag amber">Exchange Information Requirements</span>
+    <span class="skill-tag amber">TIDP and MIDP production</span>
+    <span class="skill-tag amber">CDE configuration</span>
+    <span class="skill-tag teal">BIM Use table — 24 uses lifecycle</span>
+    <span class="skill-tag teal">RACI responsibility matrix</span>
+    <span class="skill-tag teal">IFC open format specification</span>
+    <span class="skill-tag blue">ISO 55000 asset management</span>
+    <span class="skill-tag blue">BS 8210 FM requirements</span>
+    <span class="skill-tag blue">UK National Annex application</span>
+    <span class="skill-tag">File naming conventions</span>
+    <span class="skill-tag">Model delivery scheduling</span>
+  </div>
+  <div class="cta-row reveal">
+    <div>
+      <div class="cta-label">Next Project</div>
+      <div class="cta-title">Applied BIM — Revit, Navisworks and Power BI</div>
+    </div>
+    <a href="bim-design.html" class="cta-link">View Project →</a>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <div><div class="footer-name">Anusha Jambaldinni</div><div class="footer-sub">Construction Project Manager · Oxford, UK</div></div>
+  <div class="footer-links"><a href="index.html">← Portfolio</a><a href="bim-design.html">Next →</a><a href="mailto:anushajambaldinni.work@gmail.com">Email</a></div>
+</footer>
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i*.04)+'s';io.observe(el);});
+</script>
+</body>
+</html>
